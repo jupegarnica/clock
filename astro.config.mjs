@@ -19,6 +19,6 @@ import react from "@astrojs/react";
 
 export default defineConfig({
   integrations: [react()],
-  output: "server",
+  // output: "server",
   adapter: deno(),
 });
