@@ -27,4 +27,4 @@ jobs:
           project: "clock-garn-dev"
           # entrypoint: dist/server/entry.mjs
           entrypoint: jsr:@std/http/file-server
-          root: dist
+          root: dist/client
