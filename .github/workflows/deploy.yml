@@ -39,6 +39,4 @@ jobs:
         with:
           project: "clock-garn-dev"
           entrypoint: "server/entry.mjs"
-          root: "dist"
-          
-          
+          root: "."
