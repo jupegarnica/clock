@@ -9,6 +9,12 @@ import Clock from "../../components/Clock.jsx";
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>Astro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap"
+      rel="stylesheet"
+    />
     <style id="reset">
       * {
         box-sizing: border-box;
@@ -16,14 +22,16 @@ import Clock from "../../components/Clock.jsx";
       html,
       body {
         height: 100%;
-        font-family: sans-serif;
+        font-family: "Major Mono Display", monospace;
+        font-weight: 400;
+        font-style: normal;
         background-color: #f0f0f0;
         color: #333;
-		margin: 0;
+        margin: 0;
       }
     </style>
   </head>
   <body>
-    <Clock client:load/>
+    <Clock client:load />
   </body>
 </html>

@@ -10,38 +10,55 @@ const Container = styled.div`
   background-color: ${(props) => props.color};
 `;
 const ClockStyled = styled.div`
-  font-size: 5rem;
-  font-family: monospace;
+  font-size: 7rem;
+  margin-bottom: 1em;
   color: ${(props) => props.color};
 `;
 const Hours = styled.span``;
 const Colon = styled.span`
-  opacity: 0.8;
-  animation: blink 5s alternate infinite;
-  @keyframes blink {
+  opacity: 0;
+  animation: colon 6s alternate infinite;
+  @keyframes colon {
     0% {
+      opacity: 0.5;
+    }
+    30% {
       opacity: 0;
     }
-    60% {
-      opacity: 0.6;
+    70% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.5;
     }
   }
 `;
 const Minutes = styled.span``;
 const Seconds = styled.span``;
-
+const ColorStyled = styled.div`
+  font-size: 1.4rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: ${(props) => props.color};
+  margin-top: 1rem;
+`;
 
 const Hashtag = styled.span`
   color: ${(props) => props.color};
-  opacity: 0.5;
+  opacity: 0;
   margin-right: 0.5rem;
-  animation: blink 5s alternate infinite;
-  @keyframes blink {
+  animation: hashtag 6s alternate infinite;
+  @keyframes hashtag {
     0% {
       opacity: 0;
     }
-    60% {
-      opacity: 0.6;
+    30% {
+      opacity: 0.5;
+    }
+    70% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 0;
     }
   }
 `;
@@ -50,8 +67,8 @@ const Clock = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      // setTime(new Date());
-      setTime(new Date("2023-10-01T21:59:59Z"));
+      setTime(new Date());
+      // setTime(new Date("2023-10-01T21:59:59Z"));
     }, 1000);
 
     return () => clearInterval(timer);
@@ -69,6 +86,15 @@ const Clock = () => {
 
   const backgroundColor = time ? colorFromTime(formattedTime) : "#000";
   const textColor = contrastTo(backgroundColor);
+  const rgbColor = backgroundColor
+    .replace("#", "")
+    .match(/.{1,2}/g)
+    .map((hex) => parseInt(hex, 16));
+  const [r, g, b] = rgbColor;
+  const hslColor = rgbColor.map((color) => color / 255);
+  const h = Math.round(hslColor[0] * 360);
+  const s = Math.round(hslColor[1] * 100);
+  const l = Math.round(hslColor[2] * 100);
 
   return (
     <Container color={backgroundColor}>
@@ -80,7 +106,8 @@ const Clock = () => {
         <Colon>:</Colon>
         <Seconds>{String(seconds).padStart(2, "0")}</Seconds>
       </ClockStyled>
-      {/* <ColorStyled color={textColor}>{backgroundColor}</ColorStyled> */}
+      <ColorStyled color={textColor}>rgb({r}, {g}, {b})</ColorStyled>
+      <ColorStyled color={textColor}>hsl({h}, {s}, {l})</ColorStyled>
     </Container>
   );
 };
