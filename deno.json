@@ -1,0 +1,6 @@
+{
+    "imports": {
+        "react-dom/server": "npm:react-dom@18.2.0/server",
+        "express": "npm:express@4.21.2"
+    }
+}
