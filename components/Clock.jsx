@@ -42,7 +42,7 @@ const ColorStyled = styled.div`
   padding: 0.2rem 1rem;
   font-family: "Courier New", Courier, monospace;
   color: ${(props) => props.color};
-  background-color: ${(props) => props.bgColor || "transparent"};
+  background-color: ${(props) => props.$bgColor || "transparent"};
   margin-top: 1rem;
 `;
 
@@ -285,7 +285,7 @@ const Clock = () => {
       <ColorStyled color={textColor}>
         hsl({h}, {s}, {l})
       </ColorStyled>
-      <ColorStyled color={textColor} bgColor={namedColor.hex}>
+      <ColorStyled color={textColor} $bgColor={namedColor.hex}>
         <div>{namedColor.name}</div>
         <div>{namedColor.hex}</div>
         <div>rgb({namedColor.rgb.join(", ")})</div>
