@@ -1,4 +1,4 @@
-import express from "express";
+import express from "npm:express";
 import { handler as ssrHandler } from "../dist/server/entry.mjs";
 
 const app = express();
