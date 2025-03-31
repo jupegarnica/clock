@@ -8,6 +8,10 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   background-color: ${(props) => props.color};
+  ::selection {
+    color: ${(props) => props.color};
+    background-color: white;
+  }
 `;
 const ClockStyled = styled.div`
   font-size: calc(
@@ -67,6 +71,13 @@ const Hashtag = styled.span`
   }
 `;
 
+const ColorsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: flex-start;
+  padding: 1rem;
+`;
 const namedColors = [
   { name: "lightsalmon", hex: "#FFA07A", rgb: [255, 160, 122] },
   { name: "salmon", hex: "#FA8072", rgb: [250, 128, 114] },
@@ -263,33 +274,39 @@ const Clock = () => {
     .match(/.{1,2}/g)
     .map((hex) => parseInt(hex, 16));
   const [r, g, b] = rgbColor;
+  const _h = hours.toFixed(0).toString(16).padStart(2, "0");
+  const _m = minutes.toFixed(0).toString(16).padStart(2, "0");
+  const _s = seconds.toFixed(0).toString(16).padStart(2, "0");
   const hslColor = rgbColor.map((color) => color / 255);
   const h = Math.round(hslColor[0] * 360);
   const s = Math.round(hslColor[1] * 100);
   const l = Math.round(hslColor[2] * 100);
-
+  const hex = `#${_h}${_m}${_s}`;
+  const rgb = `rgb(${r}, ${g}, ${b})`;
+  const hsl = `hsl(${h}, ${s}, ${l})`;
   const namedColor = getClosestColor(r, g, b);
   return (
     <Container color={backgroundColor}>
       <ClockStyled color={textColor}>
         <Hashtag>#</Hashtag>
-        <Hours>{String(hours).padStart(2, "0")}</Hours>
+        <Hours>{_h}</Hours>
         <Colon>:</Colon>
-        <Minutes>{String(minutes).padStart(2, "0")}</Minutes>
+        <Minutes>{_m}</Minutes>
         <Colon>:</Colon>
-        <Seconds>{String(seconds).padStart(2, "0")}</Seconds>
+        <Seconds>{_s}</Seconds>
       </ClockStyled>
-      <ColorStyled color={textColor}>
-        rgb({r}, {g}, {b})
-      </ColorStyled>
-      <ColorStyled color={textColor}>
-        hsl({h}, {s}, {l})
-      </ColorStyled>
-      <ColorStyled color={textColor} $bgColor={namedColor.hex}>
-        <div>{namedColor.name}</div>
-        <div>{namedColor.hex}</div>
-        <div>rgb({namedColor.rgb.join(", ")})</div>
-      </ColorStyled>
+      <ColorsWrapper>
+        <ColorStyled color={textColor}>
+          <div>{hex}</div>
+          <div>{rgb}</div>
+          <div>{hsl}</div>
+        </ColorStyled>
+        <ColorStyled color={textColor} $bgColor={namedColor.hex}>
+          <div>{namedColor.name}</div>
+          <div>{namedColor.hex}</div>
+          <div>rgb({namedColor.rgb.join(", ")})</div>
+        </ColorStyled>
+      </ColorsWrapper>
     </Container>
   );
 };
