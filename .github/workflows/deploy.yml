@@ -25,4 +25,6 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "clock-garn-dev"
-          entrypoint: dist/server/entry.mjs
+          # entrypoint: dist/server/entry.mjs
+          entrypoint: jsr:@std/http/file-server
+          root: dist
