@@ -228,12 +228,11 @@ function getClosestColor(r, g, b) {
 }
 
 const Clock = () => {
-  const [time, setTime] = useState(null);
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTime(new Date());
-      // Update the tab title with the current time
       const currentTime = new Date();
       const titleTime = currentTime.toLocaleTimeString("es-ES", {
         hour: "2-digit",
@@ -287,7 +286,9 @@ const Clock = () => {
         hsl({h}, {s}, {l})
       </ColorStyled>
       <ColorStyled color={textColor} bgColor={namedColor.hex}>
-        {namedColor.name} {namedColor.hex} rgb({namedColor.rgb.join(", ")})
+        <div>{namedColor.name}</div>
+        <div>{namedColor.hex}</div>
+        <div>rgb({namedColor.rgb.join(", ")})</div>
       </ColorStyled>
     </Container>
   );
