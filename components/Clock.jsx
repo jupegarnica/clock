@@ -10,7 +10,7 @@ const Container = styled.div`
   background-color: ${(props) => props.color};
 `;
 const ClockStyled = styled.div`
-  font-size: 7rem;
+  font-size: calc(100vw / 10); /* Responsive font size to fit 10 characters in a row */
   margin-bottom: 1em;
   color: ${(props) => props.color};
 `;
@@ -36,7 +36,7 @@ const Colon = styled.span`
 const Minutes = styled.span``;
 const Seconds = styled.span``;
 const ColorStyled = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-family: 'Courier New', Courier, monospace;
   color: ${(props) => props.color};
   margin-top: 1rem;
