@@ -68,6 +68,14 @@ const Clock = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setTime(new Date());
+      // Update the tab title with the current time
+      const currentTime = new Date();
+      const titleTime = currentTime.toLocaleTimeString("es-ES", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+      document.title = titleTime;
       // setTime(new Date("2023-10-01T21:59:59Z"));
     }, 1000);
 
