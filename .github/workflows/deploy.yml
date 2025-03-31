@@ -38,5 +38,5 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "clock-garn-dev"
-          entrypoint: "server/entry.mjs"
+          entrypoint: "./dist/server/entry.mjs"
           root: "."
