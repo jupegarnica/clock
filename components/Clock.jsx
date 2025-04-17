@@ -81,6 +81,9 @@ const ColorsWrapper = styled.div`
   align-items: center;
   padding: 1rem;
 `;
+const CLOCK_EMOJIS = [
+  "🕛","🕐","🕑","🕒","🕓","🕔","🕕","🕖","🕗","🕘","🕙","🕚"
+];
 const namedColors = [
   { name: "lightsalmon", hex: "#FFA07A", rgb: [255, 160, 122] },
   { name: "salmon", hex: "#FA8072", rgb: [250, 128, 114] },
@@ -245,6 +248,21 @@ const Clock = () => {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
+    function updateFavicon(date) {
+      const h = date.getHours() % 12;
+      const emoji = CLOCK_EMOJIS[h];
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="90">${emoji}</text></svg>`;
+      const url = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+      let link = document.querySelector("link[rel*='icon']");
+      if (!link) {
+        link = document.createElement("link");
+        link.rel = "icon";
+        document.head.appendChild(link);
+      }
+      link.href = url;
+    }
+    // Initialize favicon based on current hour
+    updateFavicon(new Date());
     const timer = setInterval(() => {
       setTime(new Date());
       const currentTime = new Date();
@@ -255,6 +273,8 @@ const Clock = () => {
       });
       document.title = titleTime;
       // setTime(new Date("2023-10-01T21:59:59Z"));
+      // Update favicon each tick
+      updateFavicon(currentTime);
     }, 1000);
 
     return () => clearInterval(timer);
