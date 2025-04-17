@@ -4,8 +4,6 @@ import { styled } from "styled-components";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
   background-color: ${(props) => props.color};
   ::selection {
@@ -14,10 +12,13 @@ const Container = styled.div`
   }
 `;
 const ClockStyled = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: calc(
     100vw / 10
   ); /* Responsive font size to fit 10 characters in a row */
-  margin-bottom: 1em;
   color: ${(props) => props.color};
 `;
 const Hours = styled.span``;
@@ -48,6 +49,7 @@ const ColorStyled = styled.div`
   color: ${(props) => props.color};
   background-color: ${(props) => props.$bgColor || "transparent"};
   margin-top: 1rem;
+  text-align: left;
 `;
 
 const Hashtag = styled.span`
@@ -72,10 +74,11 @@ const Hashtag = styled.span`
 `;
 
 const ColorsWrapper = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
   padding: 1rem;
 `;
 const namedColors = [
@@ -296,16 +299,14 @@ const Clock = () => {
         <Seconds>{_s}</Seconds>
       </ClockStyled>
       <ColorsWrapper>
-        <ColorStyled color={textColor}>
-          <div>{hex}</div>
-          <div>{rgb}</div>
-          <div>{hsl}</div>
-        </ColorStyled>
-        <ColorStyled color={textColor} $bgColor={namedColor.hex}>
-          <div>{namedColor.name}</div>
-          <div>{namedColor.hex}</div>
-          <div>rgb({namedColor.rgb.join(", ")})</div>
-        </ColorStyled>
+        <div>
+          <ColorStyled color={textColor}>HEX: {hex}</ColorStyled>
+          <ColorStyled color={textColor}>RGB: {rgb}</ColorStyled>
+          <ColorStyled color={textColor}>HSL: {hsl}</ColorStyled>
+          <ColorStyled color={textColor} $bgColor={namedColor.hex}>
+            CLOSEST NAME: {namedColor.name}
+          </ColorStyled>
+        </div>
       </ColorsWrapper>
     </Container>
   );
