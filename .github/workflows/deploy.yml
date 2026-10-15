@@ -1,30 +1,32 @@
 name: Deploy
-on: [push]
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy to Cloudflare Workers
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write # Needed for auth with Deno Deploy
-      contents: read # Needed to clone the repository
+    concurrency:
+      group: deploy-${{ github.ref }}
+      cancel-in-progress: true
 
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
 
-      # Not using npm? Change `npm ci` to `yarn install` or `pnpm i`
       - name: Install dependencies
         run: npm ci
 
-      # Not using npm? Change `npm run build` to `yarn build` or `pnpm run build`
-      - name: Build Astro
+      - name: Build
         run: npm run build
 
-      - name: Upload to Deno Deploy
-        uses: denoland/deployctl@v1
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
         with:
-          project: "clock-garn-dev"
-          # entrypoint: dist/server/entry.mjs
-          entrypoint: jsr:@std/http/file-server
-          root: dist/client
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Static Assets requiere Wrangler 4 (el default de la action es 3.90)
+          wranglerVersion: "4"
