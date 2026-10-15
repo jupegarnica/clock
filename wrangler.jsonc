@@ -2,6 +2,13 @@
   "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
   "name": "clock",
   "compatibility_date": "2026-10-15",
+  "routes": [
+    {
+      "pattern": "clock.garn.dev",
+      "custom_domain": true
+    }
+  ],
+  "workers_dev": true,
   "assets": {
     "directory": "./dist"
   }
